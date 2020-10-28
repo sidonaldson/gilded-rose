@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { GildedRose } from "../app/gilded-rose";
-import Item, { Cheese, BackstagePass, Sulfuras } from "../app/items";
+import Item, { Cheese, BackstagePass, Sulfuras, Conjured } from "../app/items";
 import { ItemDefaultTests } from "./helpers";
 
 describe("Gilded Rose", function () {
@@ -107,5 +107,27 @@ describe("Gilded Rose", function () {
     it("Quality should be 80", function () {
       expect(itemArray[0].quality).to.equal(80);
     });
+  });
+
+  describe("Conjured", function () {
+    const gildedRose = new GildedRose([new Conjured("Conjured test", 1, 20)]);
+    let itemArray = gildedRose.updateQuality();
+    ItemDefaultTests(itemArray[0]);
+    it("SellIn should reduce by one per day", function () {
+      expect(itemArray[0].sellIn).to.equal(0);
+    });
+    it("Quality should reduce by two per day", function () {
+      expect(itemArray[0].quality).to.equal(18);
+    });
+    it("Quality should reduce by four per day if sellIn is less than 0", function () {
+      itemArray = gildedRose.updateQuality();
+      expect(itemArray[0].quality).to.equal(14);
+    });
+    it("Quality should >= 0", function () {
+        const gildedRose = new GildedRose([new Conjured("Conjured test", 1, 0)]);
+        let itemArray = gildedRose.updateQuality();
+        ItemDefaultTests(itemArray[0]);
+        expect(itemArray[0].quality).to.equal(0);
+      });
   });
 });
