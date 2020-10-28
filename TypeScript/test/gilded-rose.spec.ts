@@ -30,7 +30,8 @@ describe("Gilded Rose", function () {
     it("Quality should increase by one per day", function () {
       expect(itemArray[0].quality).to.equal(11);
     });
-    it("Quality should increase by two per day if sellIn is less than 0s", function () {
+    // unsure about the below test as it doesn't explicitly say it increased by two (so i guess the code is right!)
+    it("Quality should increase by two per day if sellIn is less than 0", function () {
       const gildedRose = new GildedRose([new Item("Aged Brie", -1, 10)]);
       let itemArray = gildedRose.updateQuality();
       ItemDefaultTests(itemArray[0]);
