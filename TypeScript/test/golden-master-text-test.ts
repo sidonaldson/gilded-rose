@@ -1,10 +1,5 @@
-import {
-  NewItem as Item,
-  Cheese,
-  BackstagePass,
-  Sulfuras,
-  GildedRose,
-} from "../app/gilded-rose";
+import { GildedRose } from "../app/gilded-rose";
+import Item, { Cheese, BackstagePass, Sulfuras } from "../app/items";
 
 const items = [
   new Item("+5 Dexterity Vest", 10, 20), //

@@ -1,11 +1,6 @@
 import { expect } from "chai";
-import {
-  NewItem as Item,
-  Cheese,
-  BackstagePass,
-  Sulfuras,
-  GildedRose,
-} from "../app/gilded-rose";
+import { GildedRose } from "../app/gilded-rose";
+import Item, { Cheese, BackstagePass, Sulfuras } from "../app/items";
 import { ItemDefaultTests } from "./helpers";
 
 describe("Gilded Rose", function () {
@@ -13,7 +8,6 @@ describe("Gilded Rose", function () {
   describe("Basic Item", function () {
     const gildedRose = new GildedRose([new Item("Test Name", 1, 10)]);
     let itemArray = gildedRose.updateQuality();
-    console.log(itemArray);
     ItemDefaultTests(itemArray[0]);
     it("Name should equal 'Test Name'", function () {
       expect(itemArray[0].name).to.equal("Test Name");
