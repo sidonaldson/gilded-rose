@@ -1,5 +1,11 @@
 import { expect } from "chai";
-import { NewItem as Item, GildedRose } from "../app/gilded-rose";
+import {
+  NewItem as Item,
+  Cheese,
+  BackstagePass,
+  Sulfuras,
+  GildedRose,
+} from "../app/gilded-rose";
 import { ItemDefaultTests } from "./helpers";
 
 describe("Gilded Rose", function () {
@@ -22,10 +28,16 @@ describe("Gilded Rose", function () {
       itemArray = gildedRose.updateQuality();
       expect(itemArray[0].quality).to.equal(7);
     });
+    it("Quality should >= 0", function () {
+      const gildedRose = new GildedRose([new Item("Test Name", 1, 0)]);
+      let itemArray = gildedRose.updateQuality();
+      ItemDefaultTests(itemArray[0]);
+      expect(itemArray[0].quality).to.equal(0);
+    });
   });
 
   describe("Brie", function () {
-    const gildedRose = new GildedRose([new Item("Aged Brie", 1, 10)]);
+    const gildedRose = new GildedRose([new Cheese("Aged Brie", 1, 10)]);
     let itemArray = gildedRose.updateQuality();
     ItemDefaultTests(itemArray[0]);
     it("Quality should increase by one per day", function () {
@@ -33,13 +45,13 @@ describe("Gilded Rose", function () {
     });
     // unsure about the below test as it doesn't explicitly say it increased by two (so i guess the code is right!)
     it("Quality should increase by two per day if sellIn is less than 0", function () {
-      const gildedRose = new GildedRose([new Item("Aged Brie", -1, 10)]);
+      const gildedRose = new GildedRose([new Cheese("Aged Brie", -1, 10)]);
       let itemArray = gildedRose.updateQuality();
       ItemDefaultTests(itemArray[0]);
       expect(itemArray[0].quality).to.equal(12);
     });
     it("Quality should go up every day but quality must not exeed 50", function () {
-      const gildedRose = new GildedRose([new Item("Aged Brie", 1, 50)]);
+      const gildedRose = new GildedRose([new Cheese("Aged Brie", 1, 50)]);
       let itemArray = gildedRose.updateQuality();
       ItemDefaultTests(itemArray[0]);
       expect(itemArray[0].quality).to.equal(50);
@@ -49,7 +61,7 @@ describe("Gilded Rose", function () {
   describe("Backstage Passes", function () {
     it("Quality should increase by one per day if sellIn > 10", function () {
       const gildedRose = new GildedRose([
-        new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
+        new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 15, 20),
       ]);
       let itemArray = gildedRose.updateQuality();
       ItemDefaultTests(itemArray[0]);
@@ -57,7 +69,7 @@ describe("Gilded Rose", function () {
     });
     it("Quality should increase by two per day if sellIn <= 10", function () {
       const gildedRose = new GildedRose([
-        new Item("Backstage passes to a TAFKAL80ETC concert", 10, 20),
+        new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 10, 20),
       ]);
       let itemArray = gildedRose.updateQuality();
       ItemDefaultTests(itemArray[0]);
@@ -65,7 +77,7 @@ describe("Gilded Rose", function () {
     });
     it("Quality should increase by three per day if sellIn <= 5", function () {
       const gildedRose = new GildedRose([
-        new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20),
+        new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 5, 20),
       ]);
       let itemArray = gildedRose.updateQuality();
       ItemDefaultTests(itemArray[0]);
@@ -73,7 +85,15 @@ describe("Gilded Rose", function () {
     });
     it("Quality should be 0 is sellIn < 0", function () {
       const gildedRose = new GildedRose([
-        new Item("Backstage passes to a TAFKAL80ETC concert", 0, 20),
+        new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 0, 20),
+      ]);
+      let itemArray = gildedRose.updateQuality();
+      ItemDefaultTests(itemArray[0]);
+      expect(itemArray[0].quality).to.equal(0);
+    });
+    it("Quality should be >= 0", function () {
+      const gildedRose = new GildedRose([
+        new BackstagePass("Backstage passes to a TAFKAL80ETC concert", 0, 51),
       ]);
       let itemArray = gildedRose.updateQuality();
       ItemDefaultTests(itemArray[0]);
@@ -83,7 +103,7 @@ describe("Gilded Rose", function () {
 
   describe("Sulfuras", function () {
     const gildedRose = new GildedRose([
-      new Item("Sulfuras, Hand of Ragnaros", 0, 80),
+      new Sulfuras("Sulfuras, Hand of Ragnaros", 0, 80),
     ]);
     let itemArray = gildedRose.updateQuality();
     ItemDefaultTests(itemArray[0]);
