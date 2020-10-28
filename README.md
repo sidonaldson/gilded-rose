@@ -1,4 +1,4 @@
-# Gilded Rose
+# Gilded Rose - Simon Donaldson
 
 ### Guidance Notes
 
