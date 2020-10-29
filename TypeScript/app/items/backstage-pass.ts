@@ -2,18 +2,18 @@ import NewItem from "./";
 
 export default class BackstagePass extends NewItem {
   update(): void {
-    if (this.quality < 50) {
-      this.quality = this.quality + 1;
-      if (this.sellIn < 11 && this.quality < 50) {
-        this.quality = this.quality + 1;
-      }
-      if (this.sellIn < 6 && this.quality < 50) {
-        this.quality = this.quality + 1;
-      }
-    }
-    this.sellIn = this.sellIn - 1;
+    this.nextDay();
+
     if (this.sellIn < 0) {
-      this.quality = this.quality - this.quality;
+      this.quality = 0;
+    } else if (this.sellIn <= 5) {
+      this.quality = this.quality + 3;
+    } else if (this.sellIn <= 10) {
+      this.quality = this.quality + 2;
+    } else {
+      this.quality = this.quality + 1;
     }
+
+    this.checkQuality();
   }
 }
